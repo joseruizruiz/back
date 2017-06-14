@@ -27,46 +27,31 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-// Como habilitar CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
-app.use(function(req,res, next) {
-  // en cada middleware tengo que responder o llamar a next
-  console.log('URL:', req.originalUrl);
-  if (false) {
-    return next(new Error('fatal'));
-  }
-  //res.send('ok');
-  next();
-});
 
 
 
 // Rutas de la aplicación
-app.use('/',              require('./routes/index'));
+app.use('/', require('./routes/index'));
 app.use('/apiv1/operadores', require('./routes/apiv1/operadores'));
 app.use('/apiv1/clientes', require('./routes/apiv1/clientes'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
